@@ -23,7 +23,25 @@ brew cask install aws-vault 1password 1password-cli
 
 ## Installation
 ### ZSH
-For ZSH, its configuration file, restart your shell to pick up the changes
+For ZSH, it's recommended to use your favorite plugin manager, such as Antigen.  Simply add the plugin to the set of plugins in your `.zshrc` file (or wherever your plugin manager requires):
+```
+antigen bundle https://gitlab.com/kevinziegler/opav.git
+```
+Restart your shell, and you're all set!
+
+### Bash / ZSH without a plugin manager
+If you're using Bash, you can simply clone and source the plugin in your shell's config file.  Similarly, you can source the ZSH plugin in place of using a plugin manager.
+``` shellsession
+git clone git@gitlab.com:kevinziegler/opav.git
+
+# Source the plugin for bash
+echo "source $PWD/opav/opav.plugin.bash" >> ~/.bashrc
+
+# Source the standalone plugin in ZSH
+echo "source $PWD/opav/opav.plugin.zsh" >> ~/.bashrc
+```
+Restart your shell, and you're all set!
+
 ## Usage
 This plugin adds 3 aliases:
 * `opav` - Use this in place of aws-vault for an over-powered experience
