@@ -1,0 +1,26 @@
+# Select the 1Password item to use for generating MFA codes
+function opav-select-op-aws-item() {
+    mkdir -p "$(dirname "$OPAV_CONFIG")";
+
+    # Steps:
+    # 1. (jq)          Extract Title/UUID from 1Password as a CSV
+    # 2. (sed)         Strip out quotes (for display purposes)
+    # 3. (echo && cat) Prepend a header
+    # 4. (column)      Tabulate items for display in FZF
+    # 5. (fzf)         Select a 1Password item
+    # 6. (awk)         Extract the UUID of the selected item
+    # 7. (jq)          write the UUID to the opav config
+    op list items \
+        | jq -r '.[] | [.overview.title, .uuid] | @csv' \
+        | sed 's/"//g' \
+        | (echo "TITLE,UUID" && cat) \
+        | column -t -s, \
+        | fzf \
+            --header "Select the 1Password item for your AWS account" \
+            --header-lines 1 \
+            -1 \
+            --preview-window=down:2 \
+            --preview='opav-preview-op-item {}' \
+        | awk '{print $NF}' \
+        | jq -R '{ "op_aws_item": . }' > "$OPAV_CONFIG";
+}

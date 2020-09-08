@@ -1,0 +1,8 @@
+# Get the MFA token for a user to sign into AWS
+function opav-mfa-token() {
+    until op get totp "$(opav-get-aws-item-uuid)" 2>/dev/null; do
+        print "Could not get MFA token.  Running setup..." >&2
+        sleep 2
+        opav-select-op-aws-item;
+    done
+}

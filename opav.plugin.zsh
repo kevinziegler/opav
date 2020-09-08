@@ -1,4 +1,10 @@
-fpath+="${0:h}/functions.sh"
+SOURCE_PATH="${0:h}"
 
-source "${0:h}/vars.sh"
-source "${0:h}/aliases.sh"
+fpath+="$SOURCE_PATH/funcs"
+
+for func in "$SOURCE_PATH"/funcs/*; do
+    autoload -Uz $func
+done
+
+source "$SOURCE_PATH/vars.sh"
+source "$SOURCE_PATH/aliases.sh"

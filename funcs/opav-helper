@@ -1,0 +1,14 @@
+# Run a command in aws-vault without worrying about MFA args
+function opav-helper() {
+    local mfa_token='';
+    local command=$1;
+    shift;
+
+    # Generate an MFA token and argument if the given command
+    # can accept it
+    [[ "$command" =~ ^(login|exec)$ ]] &&
+        opav-ensure-session &&
+        mfa_token=$(opav-mfa-token);
+
+    aws-vault "$command" ${mfa_token:+--mfa-token="$mfa_token"} "$@";
+}

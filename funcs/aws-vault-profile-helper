@@ -1,0 +1,6 @@
+# Select a profile for use with aws-vault
+function aws-vault-profile-helper() {
+    aws-vault list \
+        | fzf --header-lines 2 --header "Select an AWS Profile" \
+        | cut -d' ' -f1
+}

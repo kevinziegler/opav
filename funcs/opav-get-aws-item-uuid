@@ -1,0 +1,5 @@
+# Get the saved UUID of the 1Password AWS Item
+function opav-get-aws-item-uuid() {
+    jq -re '.op_aws_item' "$OPAV_CONFIG" 2>/dev/null;
+    return $?;
+}
