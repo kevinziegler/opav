@@ -38,7 +38,7 @@ git clone git@gitlab.com:kevinziegler/opav.git
 echo "source $PWD/opav/opav.plugin.bash" >> ~/.bashrc
 
 # Source the standalone plugin in ZSH
-echo "source $PWD/opav/opav.plugin.zsh" >> ~/.bashrc
+echo "source $PWD/opav/opav.plugin.zsh" >> ~/.zshrc
 ```
 Restart your shell, and you're all set!
 
