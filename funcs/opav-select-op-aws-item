@@ -1,5 +1,7 @@
 # Select the 1Password item to use for generating MFA codes
 function opav-select-op-aws-item() {
+    opav-op-check || return;
+
     mkdir -p "$(dirname "$OPAV_CONFIG")";
 
     # Steps:
