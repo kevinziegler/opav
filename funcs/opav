@@ -7,7 +7,7 @@ function opav() {
     # Generate an MFA token and argument if the given command
     # can accept it
     [[ "$command" =~ ^(login|exec)$ ]] &&
-        opav-ensure-session &&
+        _opav-ensure-session &&
         mfa_token=$(opav-mfa-token);
 
     aws-vault "$command" ${mfa_token:+--mfa-token="$mfa_token"} "$@";
