@@ -1,3 +1,0 @@
-function opav-op-check() {
-  which op > /dev/null || (echo "Could not find 1Password-CLI!  Aborting." >&2 && exit 1)
-}

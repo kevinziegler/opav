@@ -1,0 +1,10 @@
+# Ensure the user has a 1Password session in their current
+# shell.  Attempt to restart it if not.
+function _opav-ensure-session() {
+    _opav-ensure-env || return;
+
+    local account=$(opav-get-op-account);
+    eval "$(op signin "$account")";
+
+    until op get account &>/dev/null; do eval "$(op signin "$account")"; done
+}

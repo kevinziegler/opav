@@ -1,0 +1,5 @@
+function opav-setup() {
+    echo "{}" > "$OPAV_CONFIG";
+    opav-get-op-account > /dev/null;
+    opav-get-op-aws-item > /dev/null;
+};

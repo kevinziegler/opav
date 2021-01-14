@@ -1,9 +1,0 @@
-# Ensure the user has a 1Password session in their current
-# shell.  Attempt to restart it if not.
-function opav-ensure-session() {
-    opav-op-check || return;
-
-    until op get account &>/dev/null; do
-        eval "$(op signin my)";
-    done
-}

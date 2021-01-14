@@ -1,0 +1,12 @@
+function _opav-update-config() {
+    local config="{}";
+    local key="$1";
+    local value="$2";
+
+    config=$(cat "$OPAV_CONFIG");
+    [ -z "$config" ] && config="{}";
+
+    mkdir -p "$(dirname "$OPAV_CONFIG")";
+
+    echo "$config" | jq --arg k "$key" --arg v "$value" '.[$k] = $v' > "$OPAV_CONFIG";
+}

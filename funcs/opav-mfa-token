@@ -2,9 +2,9 @@
 function opav-mfa-token() {
     opav-op-check || return;
 
-    until op get totp "$(opav-get-aws-item-uuid)" 2>/dev/null; do
-        print "Could not get MFA token.  Running setup..." >&2
-        sleep 2
-        opav-select-op-aws-item;
-    done
+    local op_account=$(opav-get-op-account);
+    local op_item=$(opav-get-op-aws-item "$account");
+
+    op get totp --account "$op_account" "$op_item" \
+        || echo "Could not get MFA token.  Please run opav-setup" 1>2;
 }

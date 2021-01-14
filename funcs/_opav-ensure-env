@@ -1,0 +1,4 @@
+function _opav-ensure-env() {
+    which op > /dev/null || (echo "Could not find 1Password-CLI!  Aborting." >&2 && exit 1);
+    which jq > /dev/null || (echo "jq is required for this command, but it was not found.  Please install jq and ensure that it is found in PATH" >&2 && exit 1);
+}

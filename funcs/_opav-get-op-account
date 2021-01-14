@@ -1,0 +1,23 @@
+function _opav-get-op-account() {
+    local account="";
+
+    local accounts=$(
+        jq -r ".accounts[] | [.shorthand, .email, .url] | @csv" "$OPAV_OP_CONFIG" \
+            | sed 's/"//g' \
+            | (echo "NAME,EMAIL,URL" && cat) \
+            | column -t -s, \
+    );
+
+    until _opav-read-config 'op_account' 1> /dev/null; do
+        account=$(echo "$accounts" \
+            | fzf --header 'Select a 1Password account to use' --header-lines 1 --select-1 -1 \
+            | awk '{print $1}' \
+        );
+
+        [ -z "$account" ] && continue;
+
+        _opav-update-config 'op_account' "$account";
+    done
+
+    _opav-read-config 'op_account';
+}

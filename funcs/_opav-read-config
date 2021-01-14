@@ -1,0 +1,5 @@
+function _opav-read-config() {
+    local key=$1;
+    [ -f "$OPAV_CONFIG" ] || echo "{}" > "$OPAV_CONFIG";
+    jq -re --arg k "$key" '.[$k] | select (.!=null)' "$OPAV_CONFIG";
+}

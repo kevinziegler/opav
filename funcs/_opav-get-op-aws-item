@@ -1,0 +1,27 @@
+function _opav-get-op-aws-item() {
+    local account=$1;
+    local items="";
+    local item="";
+    local uuid="";
+
+    until _opav-read-config 'op_aws_item' 1> /dev/null; do
+        [ -z "$items" ] && items=$(
+            op list items --account "$account" \
+        |   op get item --fields title --format CSV - \
+        );
+
+        item=$(fzf \
+            --header 'Select your AWS credentials' \
+            --header-lines 1 \
+            --select-1 \
+            -1 <<< $items \
+        );
+
+        uuid=$(op get item "$item" | jq -r '.uuid' | sed 's/"//g');
+        [ -z "$uuid" ] && continue;
+
+        _opav-update-config 'op_aws_item' "$uuid";
+    done
+
+    _opav-read-config 'op_aws_item';
+}
