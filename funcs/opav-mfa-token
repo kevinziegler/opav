@@ -1,6 +1,7 @@
 # Get the MFA token for a user to sign into AWS
 function opav-mfa-token() {
-    opav-op-check || return;
+    _opav-ensure-env || return;
+    _opav-ensure-session;
 
     local op_account=$(_opav-get-op-account);
     local op_item=$(_opav-get-op-aws-item "$account");
