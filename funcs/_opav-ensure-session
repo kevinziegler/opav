@@ -3,7 +3,7 @@
 function _opav-ensure-session() {
     _opav-ensure-env || return;
 
-    local account=$(opav-get-op-account);
+    local account=$(_opav-get-op-account);
     eval "$(op signin "$account")";
 
     until op get account &>/dev/null; do eval "$(op signin "$account")"; done

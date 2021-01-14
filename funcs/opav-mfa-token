@@ -2,8 +2,8 @@
 function opav-mfa-token() {
     opav-op-check || return;
 
-    local op_account=$(opav-get-op-account);
-    local op_item=$(opav-get-op-aws-item "$account");
+    local op_account=$(_opav-get-op-account);
+    local op_item=$(_opav-get-op-aws-item "$account");
 
     op get totp --account "$op_account" "$op_item" \
         || echo "Could not get MFA token.  Please run opav-setup" 1>2;
